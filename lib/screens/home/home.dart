@@ -33,12 +33,31 @@ class Home extends StatelessWidget {
           ),
         )
     );
+     final addFab = Positioned(
+      width: 75.0,
+      height: 75.0,  
+    
+     bottom: 10.0,
+     right: 10.0,
+      child: FloatingActionButton(
+       
+        backgroundColor: Colors.blue[100],
+        child: Icon(
+          Icons.add_circle_outline,
+          color: Colors.red[600],
+          size: 75.0,
+          
+        ),
+        onPressed: null,
+      ),
+    );
     return Container(
       margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
       child: Stack(
         children: <Widget>[
           boardTitle,
-          boardsubTitle
+          boardsubTitle,
+          addFab
       
         ],
     )
