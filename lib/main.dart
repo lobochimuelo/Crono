@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:crono/screens/home/home.dart';
 
 void main(){
-final Color c = const Color.fromARGB(0xFF, 0x42, 0xA5, 0xF5);
   runApp(
     MaterialApp(
       home: Scaffold(
@@ -9,7 +9,7 @@ final Color c = const Color.fromARGB(0xFF, 0x42, 0xA5, 0xF5);
           backgroundColor: Colors.blue[100],
           title: Text(
             "CRONO",
-            
+
             style: TextStyle(color: Colors.black45),
           ),
           centerTitle: true,
@@ -25,11 +25,12 @@ class CardRoom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
-
+    
 
     return Container(
-      
+      color: Colors.blue[100],
+      child: Home()
     );
+    
   }
 }
