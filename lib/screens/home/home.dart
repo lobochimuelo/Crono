@@ -4,7 +4,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final boardTitle = Container(
-       padding: EdgeInsets.only(left: 10.0,top: 5.0, bottom: 10.0,right: 15.0),        
+       padding: EdgeInsets.only(left: 10.0, bottom: 10.0,right: 15.0),        
         child: Align(
           alignment: Alignment.topLeft,
           child:  Text(
@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
     );
     
     final boardsubTitle = Container(
-          padding: EdgeInsets.only(left: 10.0,top: 40.0, bottom: 10.0,right: 15.0),        child: Align(
+          padding: EdgeInsets.only(left: 10.0,top: 30.0, bottom: 10.0,right: 15.0),        child: Align(
           alignment: Alignment.topLeft,
           child:  Text(
             "Tus Actividades (horas)",
@@ -48,6 +48,7 @@ class Home extends StatelessWidget {
           size: 75.0,
           
         ),
+        elevation: 0.0,
         onPressed: null,
       ),
     );

@@ -13,6 +13,8 @@ void main(){
             style: TextStyle(color: Colors.black45),
           ),
           centerTitle: true,
+          elevation: 0.0,
+
           ),
           body: CardRoom()
         ),
