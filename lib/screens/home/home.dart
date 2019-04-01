@@ -4,27 +4,41 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final boardTitle = Container(
-        padding: EdgeInsets.all(15.0),
+       padding: EdgeInsets.only(left: 10.0,top: 5.0, bottom: 10.0,right: 15.0),        
         child: Align(
           alignment: Alignment.topLeft,
           child:  Text(
-            "Titulo",
+            "Marzo",
             textDirection: TextDirection.ltr,
             style: TextStyle(
                 color: Colors.blue[400],
-                fontSize: 24.0,
+                fontSize: 34.0,
                 fontWeight: FontWeight.w600
             ),
           ),
         )
     );
     
-  
+    final boardsubTitle = Container(
+          padding: EdgeInsets.only(left: 10.0,top: 40.0, bottom: 10.0,right: 15.0),        child: Align(
+          alignment: Alignment.topLeft,
+          child:  Text(
+            "Tus Actividades (horas)",
+            textDirection: TextDirection.ltr,
+            style: TextStyle(
+                color: Colors.blue[400],
+                fontSize: 18.0,
+                fontWeight: FontWeight.w600
+            ),
+          ),
+        )
+    );
     return Container(
-      margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
+      margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
       child: Stack(
         children: <Widget>[
           boardTitle,
+          boardsubTitle
       
         ],
     )
