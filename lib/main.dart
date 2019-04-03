@@ -34,40 +34,32 @@ class _cronoState extends State<crono> {
          child:Stack(
         
         children: <Widget>[
-          Container(
-       padding: EdgeInsets.only(left: 10.0, bottom: 10.0,right: 15.0),        
-        child: Align(
-          alignment: Alignment.topLeft,
-          child:  Text(
-            "March",
-            textDirection: TextDirection.ltr,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    Text(
+            " March",
             style: TextStyle(
                 color: Colors.blue[400],
                 fontSize: 34.0,
                 fontWeight: FontWeight.w600
             ),
           ),
-        )
-    ),
-    Container(
-          padding: EdgeInsets.only(left: 10.0,top: 30.0, bottom: 10.0,right: 15.0),        
-          child: Align(
-          alignment: Alignment.topLeft,
-          child:  Text(
-            "Tus Actividades (horas)",
-            textDirection: TextDirection.ltr,
+           Text(
+            "  Tus Actividades (horas)",
             style: TextStyle(
                 color: Colors.blue[400],
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600
             ),
           ),
-        )
-    ),
+  ],
+),
+         
     Center(
         child: AnimatedOpacity(
           opacity: _visible ? 1.0 : 0.0,
-          duration: Duration(milliseconds: 500),
+          duration: Duration(milliseconds: 140),
           child: Container(
             width: 200.0,
             height: 200.0,
@@ -96,4 +88,3 @@ class _cronoState extends State<crono> {
   }
   
 }
-
