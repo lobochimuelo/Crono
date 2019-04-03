@@ -18,6 +18,8 @@ class crono extends StatefulWidget {
 
 class _cronoState extends State<crono> {
   @override
+   bool _visible = true;
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -62,12 +64,27 @@ class _cronoState extends State<crono> {
           ),
         )
     ),
+    Center(
+        child: AnimatedOpacity(
+          opacity: _visible ? 1.0 : 0.0,
+          duration: Duration(milliseconds: 500),
+          child: Container(
+            width: 200.0,
+            height: 200.0,
+            color: Colors.green,
+          ),
+        )),
         ],
       )
       ),
        floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
-            onPressed: null,
+            onPressed: () {
+         
+          setState(() {
+            _visible = !_visible;
+          });
+        },
           ),
           bottomNavigationBar: BottomAppBar(
             color: Colors.yellow,
