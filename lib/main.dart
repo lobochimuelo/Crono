@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:crono/screens/home/home.dart';
 
 void main(){
   runApp(
