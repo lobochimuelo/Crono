@@ -14,7 +14,16 @@ void main(){
           centerTitle: true,
           elevation: 0.0,
           ),          
-          body: CardRoom()
+          body: CardRoom(),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: null,
+          ),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.yellow,
+            child: Container(height: 50.0,),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         ),
       )
   );
@@ -56,32 +65,15 @@ class CardRoom extends StatelessWidget {
           ),
         )
     );
-     final addFab = Positioned(
-      width: 75.0,
-      height: 75.0,  
     
-     bottom: 10.0,
-     right: 10.0,
-      child: FloatingActionButton(
-       
-        backgroundColor: Colors.blue[100],
-        child: Icon(
-          Icons.add_circle_outline,
-          color: Colors.red[600],
-          size: 75.0,
-          
-        ),
-        elevation: 0.0,
-        onPressed: null,
-      ),
-    );
+     
     return Container(
       color: Colors.blue[100],
       child: Stack(
         children: <Widget>[
           boardTitle,
           boardsubTitle,
-          addFab
+          
       
         ],
     )
