@@ -18,16 +18,16 @@ class crono extends StatefulWidget {
 
 class _cronoState extends State<crono> {
   @override
-   bool _visible = true;
-
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[100],
-        title: Text('CRONO',
+        title: Align(alignment: Alignment.centerRight,
+          child:Text('CRONO',
         style: TextStyle(color: Colors.black45),
+      )
       ),
-       centerTitle: true,
        elevation: 0.0,
       ),
       body: Container(decoration: BoxDecoration(color: Colors.blue[100]),
@@ -35,7 +35,9 @@ class _cronoState extends State<crono> {
         
         children: <Widget>[
           Column(
+            
             crossAxisAlignment: CrossAxisAlignment.start,
+            
   children: [
     Text(
             " March",
@@ -51,21 +53,11 @@ class _cronoState extends State<crono> {
                 color: Colors.blue[400],
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600
-            ),
-          ),
-  ],
-),
-         
-    Center(
-        child: AnimatedOpacity(
-          opacity: _visible ? 1.0 : 0.0,
-          duration: Duration(milliseconds: 140),
-          child: Container(
-            width: 200.0,
-            height: 200.0,
-            color: Colors.green,
-          ),
-        )),
+            )
+          )
+  ]
+)
+
         ],
       )
       ),
@@ -73,9 +65,23 @@ class _cronoState extends State<crono> {
             child: Icon(Icons.add),
             onPressed: () {
          
-          setState(() {
-            _visible = !_visible;
-          });
+         return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+               
+                content: Container(
+            width: 300.0,
+color: Colors.white70,          
+            child: TextFormField(
+  decoration: InputDecoration(
+    labelText: "What is your new activity?"
+  ),
+)
+          ),
+              );
+            },
+          );
         },
           ),
           bottomNavigationBar: BottomAppBar(
