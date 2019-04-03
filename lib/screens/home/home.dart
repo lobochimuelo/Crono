@@ -54,6 +54,7 @@ class Home extends StatelessWidget {
     );
     return Container(
       margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+      color: Colors.blue[100],
       child: Stack(
         children: <Widget>[
           boardTitle,
