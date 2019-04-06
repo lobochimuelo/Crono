@@ -102,6 +102,8 @@ class _cronoState extends State<crono> {
                              setState(() {
                                
                              });
+                             Navigator.pop(context);
+                             
                              }
    
                             ),
