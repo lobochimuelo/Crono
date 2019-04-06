@@ -10,6 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CRONO',
+      theme: ThemeData.dark(
+   ),
       home: crono(),
     );
   }
@@ -21,7 +23,7 @@ class crono extends StatefulWidget {
 }
 
 class _cronoState extends State<crono> {
-  final textInput = TextEditingController();
+  final newAct = TextEditingController();
   List<Activity> list = new List<Activity>();
   SharedPreferences sharedPreferences;
  @override
@@ -41,38 +43,31 @@ class _cronoState extends State<crono> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[100],
-        title: Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              'CRONO',
-              style: TextStyle(color: Colors.black45),
-            )),
-        elevation: 0.5,
+        title: Text('crono')
       ),
-      body: Container(
-          decoration: BoxDecoration(color: Colors.blue[100]),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      body: 
+              Column(
+                
+                children: [
+                Text(' '),
+                
             Text(
-              " March",
+              " Tus Actividades",
+              
               style: TextStyle(
-                  color: Colors.blue[400],
-                  fontSize: 34.0,
-                  fontWeight: FontWeight.w600),
+                  color: Colors.teal,
+                  fontSize: 34.0)
+                  
+                  
             ),
-            Text("  Tus Actividades (horas)",
-                style: TextStyle(
-                    color: Colors.blue[400],
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600)),
+                            Text(' '),
+
         
-                  Expanded(child:  list.isEmpty ? emptyList() : buildListView())
+                  Expanded(child: buildListView())
             
-          ])),
+          ]),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue[500],
-        elevation: 0.0,
+        backgroundColor: Colors.teal,
         child: Icon(Icons.add, color: Colors.white, size: 50.0),
         onPressed: () {
           return showDialog(
@@ -86,29 +81,28 @@ class _cronoState extends State<crono> {
                           TextFormField(
                             decoration: InputDecoration(
                                 labelText: "What is your new activity?"),
-                                controller: textInput
+                                controller: newAct
 
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 15.0),
-                            child: FloatingActionButton(
-                              backgroundColor: Colors.blue,
-                              child: Icon(
+                            child: IconButton(
+                               icon:Icon(
                                 Icons.save,
-                                color: Colors.white,
+                                color: Colors.teal,
                                 size: 45.0,
                               ),
-                             onPressed: () {addItem(Activity(title: textInput.text));
+                             onPressed: () {addItem(Activity(title: newAct.text));
                              setState(() {
                                
                              });
                              Navigator.pop(context);
+                             newAct.clear();
                              
                              }
    
-                            ),
+                            )
                           )
-                        ],
+                        ]
                       )));
             },
           );
@@ -117,11 +111,7 @@ class _cronoState extends State<crono> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
-Widget emptyList(){
-    return Center(
-    child:  Text('No items')
-    );
-  }
+
 
   Widget buildListView() {
     return ListView.builder(
@@ -135,25 +125,45 @@ Widget emptyList(){
   Widget buildItem(Activity item, index){
     return Dismissible(
       key: Key('${item.hashCode}'),
-      background: Container(color: Colors.red[700]),
       onDismissed: (direction) => removeItem(item),
       direction: DismissDirection.startToEnd,
+      
       child: buildListTile(item, index),
     );
   }
 
   Widget buildListTile(Activity item, int index){
-    return ListTile(
-      onTap: () => changeItemCompleteness(item),
-      title: Text(
-        item.title,
-        key: Key('item-$index'),
+    return Card(
+      color: index%3 == 0 ? (Color(0xFF3a9679)) : (index%2==0 ? Color(0xFFfabc60) : Color(0xFFe16262)),
+      margin: EdgeInsets.all(9.0),
+      shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+      child:ListTile(
+     
+      subtitle: Container(
+        color: Colors.blue[50],
         
+        child:Text(
+        "hrs"+item.hours.toString(),
+      )),
+      title: Text(
+        item.title
       ),
-      trailing: Text(
-        item.hours.toString(),
-        key: Key('item-$index'),
-      ),
+      trailing: 
+      IconButton(
+                
+                             icon:Icon(
+                                Icons.add_circle,
+                              ),
+                              color: Colors.white,
+                              iconSize: 50.0,
+                             onPressed: () => 
+                             plusHour(item)
+                             
+   
+                            ),
+    )
       
     );
   }
@@ -161,12 +171,11 @@ Widget emptyList(){
   
 
   void addItem(Activity item){
-    // Insert an item into the top of our list, on index zero
     list.insert(0, item);
     saveData();
   }
 
-  void changeItemCompleteness(Activity item){
+  void plusHour(Activity item){
     setState(() {
       item.hours ++;
     });
