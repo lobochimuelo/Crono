@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-
+import 'package:flutter/material.dart';
+import 'package:crono/activity.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,21 +21,21 @@ class crono extends StatefulWidget {
 }
 
 class _cronoState extends State<crono> {
-  List data;
   final textInput = TextEditingController();
-  File jsonFile;
-  Map<String, String> fileContent;
+  List<Activity> list = new List<Activity>();
+  SharedPreferences sharedPreferences;
+ @override
+  void initState() {
+    loadSharedPreferencesAndData();
+    super.initState();
+  }
 
-   
+  void loadSharedPreferencesAndData() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    loadData();
+  }
+
   
-void writeToFile(String act){
-  
-    
-    Map<String, String> content = {"activity": act,"hours":"0"};
-      
-      Map<String, String> jsonFileContent = json.decode(jsonFile.readAsStringSync());
-      jsonFileContent.addAll(content);
-      jsonFile.writeAsStringSync(json.encode(jsonFileContent));  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,33 +66,9 @@ void writeToFile(String act){
                     color: Colors.blue[400],
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600)),
-            Expanded(
-                child: Container(
-              // Use future builder and DefaultAssetBundle to load the local JSON file
-              child: new FutureBuilder(
-                  future: DefaultAssetBundle.of(context)
-                      .loadString('data_repo/data.json'),
-                  builder: (context, snapshot) {
-                    // Decode the JSON
-                    var new_data = json.decode(snapshot.data.toString());
-
-                    return new ListView.builder(
-                      // Build the ListView
-                      itemBuilder: (BuildContext context, int index) {
-                        return new Card(
-                          child: new Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              new Text("Name: " + new_data[index]['activity']),
-                              new Text("Height: " + new_data[index]['hours']),
-                            ],
-                          ),
-                        );
-                      },
-                      itemCount: new_data == null ? 0 : new_data.length,
-                    );
-                  }),
-            ))
+        
+                  Expanded(child:  list.isEmpty ? emptyList() : buildListView())
+            
           ])),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue[500],
@@ -123,7 +98,11 @@ void writeToFile(String act){
                                 color: Colors.white,
                                 size: 45.0,
                               ),
-                              onPressed: ()=>writeToFile(this.textInput.text)
+                             onPressed: () {addItem(Activity(title: textInput.text));
+                             setState(() {
+                               
+                             });
+                             }
    
                             ),
                           )
@@ -136,8 +115,89 @@ void writeToFile(String act){
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
+Widget emptyList(){
+    return Center(
+    child:  Text('No items')
+    );
+  }
+
+  Widget buildListView() {
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (BuildContext context,int index){
+        return buildItem(list[index], index);
+      },
+    );
+  }
+
+  Widget buildItem(Activity item, index){
+    return Dismissible(
+      key: Key('${item.hashCode}'),
+      background: Container(color: Colors.red[700]),
+      onDismissed: (direction) => removeItem(item),
+      direction: DismissDirection.startToEnd,
+      child: buildListTile(item, index),
+    );
+  }
+
+  Widget buildListTile(Activity item, int index){
+    return ListTile(
+      onTap: () => changeItemCompleteness(item),
+      title: Text(
+        item.title,
+        key: Key('item-$index'),
+        
+      ),
+      trailing: Text(
+        item.hours.toString(),
+        key: Key('item-$index'),
+      ),
+      
+    );
+  }
+
+  
+
+  void addItem(Activity item){
+    // Insert an item into the top of our list, on index zero
+    list.insert(0, item);
+    saveData();
+  }
+
+  void changeItemCompleteness(Activity item){
+    setState(() {
+      item.hours ++;
+    });
+    saveData();
+  }
+
+  void editItem(Activity item ,String title){
+    item.title = title;
+    saveData();
+  }
+
+  void removeItem(Activity item){
+    list.remove(item);
+    saveData();
+  }
+
+  void loadData() {
+    List<String> listString = sharedPreferences.getStringList('list');
+    if(listString != null){
+      list = listString.map(
+        (item) => Activity.fromMap(json.decode(item))
+      ).toList();
+      setState((){});
+    }
+  }
+
+  void saveData(){
+    List<String> stringList = list.map(
+      (item) => json.encode(item.toMap()
+    )).toList();
+    sharedPreferences.setStringList('list', stringList);
+  }
+
+
+
 }
-
-
-
-
