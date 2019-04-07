@@ -74,7 +74,9 @@ iconSize: 40.0,
                                 color: Colors.teal,
                                 size: 45.0,
                               ),
-                             onPressed: () {addItem(Activity(title: newAct.text));
+                             onPressed: () {
+                            int col =list.length%3 == 0 ? (1) : (list.length%2==0 ? 2 : 3); 
+                            addItem(Activity(title: newAct.text,clr: col));
                              setState(() {
                                
                              });
@@ -143,7 +145,6 @@ iconSize: 40.0,
 
   Widget buildListTile(Activity item, int index){
     return Card(
-      color: index%3 == 0 ? (Color(0xFF3a9679)) : (index%2==0 ? Color(0xFFfabc60) : Color(0xFFe16262)),
       margin: EdgeInsets.all(9.0),
       shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -162,8 +163,9 @@ ListTile(
                               ),
                               color: Colors.white,
                               iconSize: 50.0,
-                             onPressed: () => 
-                             plusHour(item)
+                             onPressed: () {
+                             plusHour(item);
+                             } 
                              
    
                             ),
@@ -172,13 +174,15 @@ ListTile(
 alignment: Alignment.topLeft,
      child: Container(
        margin: EdgeInsets.only(bottom: 5, right: 5, left: 5),
-        width: item.hours<2 ? 50 :(item.hours*300/may),
+       
+        width: item.hours<2 ? 40 :((item.hours/may)*300)<30 ?40 :  (item.hours/may)*300,
         decoration: new BoxDecoration(
-          color: Colors.black,
+               color: item.clr==1 ? (Color(0xFF3a9679)) : (item.clr==2 ? Color(0xFFfabc60) : Color(0xFFe16262)),
+
           borderRadius: BorderRadius.all(Radius.circular(10.0))
       ),        
         child:Text(
-        " hrs: "+item.hours.toString()+may.toString(),
+        " hrs: "+item.hours.toString(),
       )
       )
     )
@@ -206,14 +210,13 @@ alignment: Alignment.topLeft,
   void plusHour(Activity item){
     setState(() {
       item.hours ++;
+                                   buildListView();
+
     });
     saveData();
   }
 
-  void editItem(Activity item ,String title){
-    item.title = title;
-    saveData();
-  }
+  
 
   void removeItem(Activity item){
     list.remove(item);
