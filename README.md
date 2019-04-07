@@ -2,15 +2,6 @@
 
 A new Flutter project.
 
-## Getting Started
+## Description
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+Crono is a mobile app that helps you control your activities or hobbies, controlling how much time you invest in each one, because many times we dedicate a lot of time to some activities that we do not realize. With this application you can register your activities and add the hours spent on them.
