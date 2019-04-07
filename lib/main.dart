@@ -43,32 +43,10 @@ class _cronoState extends State<crono> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('crono')
-      ),
-      body: 
-              Column(
-                
-                children: [
-                Text(' '),
-                
-            Text(
-              " Tus Actividades",
-              
-              style: TextStyle(
-                  color: Colors.teal,
-                  fontSize: 34.0)
-                  
-                  
-            ),
-                            Text(' '),
-
-        
-                  Expanded(child: buildListView())
-            
-          ]),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.teal,
-        child: Icon(Icons.add, color: Colors.white, size: 50.0),
+        title: Text('crono'),
+        leading: IconButton(
+icon:Icon(Icons.add_box),
+iconSize: 40.0,
         onPressed: () {
           return showDialog(
             context: context,
@@ -107,13 +85,45 @@ class _cronoState extends State<crono> {
             },
           );
         },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      
+
+
+
+
+        ),//
+        centerTitle: true),
+      body: 
+              Column(
+                
+                children: [
+                Text(' '),
+                
+            Text(
+              " Where do you spend more time?",
+              
+              style: TextStyle(
+                 
+                  fontSize: 20.0)
+                  
+                  
+            ),
+                            Text(' '),
+
+        
+                  Expanded(child: buildListView())
+            
+          ]),
+     
+     
+        
+      
     );
   }
 
 
-  Widget buildListView() {
+   Widget buildListView() {
+    list.sort((a,b)=>b.hours.compareTo(a.hours));
+
     return ListView.builder(
       itemCount: list.length,
       itemBuilder: (BuildContext context,int index){
@@ -142,7 +152,7 @@ class _cronoState extends State<crono> {
       child:ListTile(
      
       subtitle: Container(
-        color: Colors.blue[50],
+        color: Colors.black,
         
         child:Text(
         "hrs"+item.hours.toString(),
@@ -166,6 +176,7 @@ class _cronoState extends State<crono> {
     )
       
     );
+    
   }
 
   
@@ -199,6 +210,8 @@ class _cronoState extends State<crono> {
         (item) => Activity.fromMap(json.decode(item))
       ).toList();
       setState((){});
+    list.sort((a,b)=>b.hours.compareTo(a.hours));
+
     }
   }
 
