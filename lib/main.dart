@@ -25,6 +25,8 @@ class crono extends StatefulWidget {
 class _cronoState extends State<crono> {
   final newAct = TextEditingController();
   List<Activity> list = new List<Activity>();
+  Activity lf;
+  int may=0;
   SharedPreferences sharedPreferences;
  @override
   void initState() {
@@ -35,6 +37,7 @@ class _cronoState extends State<crono> {
   void loadSharedPreferencesAndData() async {
     sharedPreferences = await SharedPreferences.getInstance();
     loadData();
+    
   }
 
   
@@ -44,6 +47,7 @@ class _cronoState extends State<crono> {
     return Scaffold(
       appBar: AppBar(
         title: Text('crono'),
+
         leading: IconButton(
 icon:Icon(Icons.add_box),
 iconSize: 40.0,
@@ -52,9 +56,10 @@ iconSize: 40.0,
             context: context,
             builder: (context) {
               return AlertDialog(
-                  content: Container(
-                      height: 140.0,
-                      child: Column(
+                  content:Container(
+                    height: 130.0,
+                    child:
+                   ListView(                    
                         children: [
                           TextFormField(
                             decoration: InputDecoration(
@@ -83,21 +88,17 @@ iconSize: 40.0,
                         ]
                       )));
             },
+        
           );
-        },
-      
+        }
 
-
-
-
-        ),//
-        centerTitle: true),
+        )),
       body: 
               Column(
                 
                 children: [
                 Text(' '),
-                
+            
             Text(
               " Where do you spend more time?",
               
@@ -120,10 +121,8 @@ iconSize: 40.0,
     );
   }
 
-
    Widget buildListView() {
     list.sort((a,b)=>b.hours.compareTo(a.hours));
-
     return ListView.builder(
       itemCount: list.length,
       itemBuilder: (BuildContext context,int index){
@@ -149,14 +148,9 @@ iconSize: 40.0,
       shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-      child:ListTile(
-     
-      subtitle: Container(
-        color: Colors.black,
-        
-        child:Text(
-        "hrs"+item.hours.toString(),
-      )),
+      child:Column(
+        children: <Widget>[
+ListTile(
       title: Text(
         item.title
       ),
@@ -173,7 +167,30 @@ iconSize: 40.0,
                              
    
                             ),
+    ),
+    Align(
+alignment: Alignment.topLeft,
+     child: Container(
+       margin: EdgeInsets.only(bottom: 5, right: 5, left: 5),
+        width: item.hours<2 ? 50 :(item.hours*300/may),
+        decoration: new BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.all(Radius.circular(10.0))
+      ),        
+        child:Text(
+        " hrs: "+item.hours.toString()+may.toString(),
+      )
+      )
     )
+    
+
+        ],
+      )
+      
+      
+      
+      
+      
       
     );
     
@@ -211,8 +228,9 @@ iconSize: 40.0,
       ).toList();
       setState((){});
     list.sort((a,b)=>b.hours.compareTo(a.hours));
-
     }
+    lf=list.first;
+     may=lf.hours;
   }
 
   void saveData(){
